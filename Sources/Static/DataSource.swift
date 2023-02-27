@@ -305,6 +305,18 @@ extension DataSource: UITableViewDelegate {
 
         tableViewDelegate?.tableView?(tableView, accessoryButtonTappedForRowWith: indexPath)
     }
+    
+    // Fix appearance
+    
+    public func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        (view as! UITableViewHeaderFooterView).contentView.backgroundColor = UIColor.clear
+        (view as! UITableViewHeaderFooterView).textLabel?.textColor = UIColor.lightGray
+    }
+    
+    public func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        (view as! UITableViewHeaderFooterView).contentView.backgroundColor = UIColor.clear
+        (view as! UITableViewHeaderFooterView).textLabel?.textColor = UIColor.lightGray
+    }
 }
 
 extension UITableView.Style {
