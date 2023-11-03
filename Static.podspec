@@ -9,7 +9,8 @@ Pod::Spec.new do |spec|
   spec.author = { 'Venmo' => 'ios@venmo.com', 'Sam Soffes' => 'sam@soff.es' }
 
   spec.swift_versions = ['5.0', '5.1', '5.2', '5.3']
-  spec.platform = :ios, '9.0'
+  spec.ios.deployment_target = '14.0'
+  spec.tvos.deployment_target = '14.0'
   spec.frameworks = 'UIKit'
   spec.source_files = 'Sources/Static/**/*.swift'
 end
