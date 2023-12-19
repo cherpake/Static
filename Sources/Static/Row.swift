@@ -44,9 +44,11 @@ public struct Row: Hashable, Equatable {
         public var type: UITableViewCell.AccessoryType {
             switch self {
             case .disclosureIndicator: return .disclosureIndicator
-            case .detailDisclosureButton(_): return .detailDisclosureButton
             case .checkmark: return .checkmark
+            #if !os(tvOS)
+            case .detailDisclosureButton(_): return .detailDisclosureButton
             case .detailButton(_): return .detailButton
+            #endif
             default: return .none
             }
         }
@@ -55,8 +57,10 @@ public struct Row: Hashable, Equatable {
         public var view: UIView? {
             switch self {
             case .view(let view): return view
+#if !os(tvOS)
             case .switchToggle(let value, let valueChange):
                 return SwitchAccessory(initialValue: value, valueChange: valueChange)
+#endif
             case .checkmarkPlaceholder:
                 return UIView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
             case .segmentedControl(let items, let selectedIndex, let valueChange):
@@ -83,8 +87,10 @@ public struct Row: Hashable, Equatable {
         /// Title of the action's button.
         public let title: String
         
+        #if !os(tvOS)
         /// Styling for button's action, used primarily for destructive actions.
         public let style: UITableViewRowAction.Style
+        #endif
         
         /// Background color of the button.
         public let backgroundColor: UIColor?
@@ -95,6 +101,7 @@ public struct Row: Hashable, Equatable {
         /// Invoked when selecting the action.
         public let selection: EditActionSelection?
         
+        #if !os(tvOS)
         public init(title: String, style: UITableViewRowAction.Style = .default, backgroundColor: UIColor? = nil, backgroundEffect: UIVisualEffect? = nil, selection: EditActionSelection? = nil) {
             self.title = title
             self.style = style
@@ -102,6 +109,14 @@ public struct Row: Hashable, Equatable {
             self.backgroundEffect = backgroundEffect
             self.selection = selection
         }
+        #else
+        public init(title: String, backgroundColor: UIColor? = nil, backgroundEffect: UIVisualEffect? = nil, selection: EditActionSelection? = nil) {
+            self.title = title
+            self.backgroundColor = backgroundColor
+            self.backgroundEffect = backgroundEffect
+            self.selection = selection
+        }
+        #endif
     }
 
     // MARK: - Properties

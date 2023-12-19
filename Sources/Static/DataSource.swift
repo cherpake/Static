@@ -242,6 +242,7 @@ extension DataSource: UITableViewDataSource {
         return row(at: indexPath)?.canEdit ?? false
     }
 
+    #if !os(tvOS)
     @objc(tableView:editActionsForRowAtIndexPath:)
     public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         return row(at: indexPath)?.editActions.map {
@@ -264,6 +265,7 @@ extension DataSource: UITableViewDataSource {
             return rowAction
         }
     }
+    #endif
 
     public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         guard let sectionIndexTitles = sectionIndexTitles, sectionIndexTitles.count >= sections.count else { return nil }

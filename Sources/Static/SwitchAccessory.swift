@@ -1,5 +1,6 @@
 import UIKit
 
+#if !os(tvOS)
 @objc(STCSwitchAccessory)
 class SwitchAccessory : UISwitch {
     typealias ValueChange = (Bool) -> ()
@@ -23,3 +24,4 @@ class SwitchAccessory : UISwitch {
         valueChange?(self.isOn)
     }
 }
+#endif
