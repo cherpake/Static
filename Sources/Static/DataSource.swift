@@ -247,6 +247,7 @@ extension DataSource: UITableViewDataSource {
         if let actions: [UIContextualAction] = row(at: indexPath)?.editActions.map({ rowAction in
             let action = UIContextualAction(style: rowAction.style, title: rowAction.title) { action, view, callback in
                 rowAction.selection?(indexPath)
+                callback(true)
             }
             if let backgroundColor = rowAction.backgroundColor {
                 action.backgroundColor = backgroundColor
