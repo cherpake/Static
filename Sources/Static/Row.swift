@@ -89,31 +89,31 @@ public struct Row: Hashable, Equatable {
         
         #if !os(tvOS)
         /// Styling for button's action, used primarily for destructive actions.
-        public let style: UITableViewRowAction.Style
+        public let style: UIContextualAction.Style
         #endif
         
         /// Background color of the button.
         public let backgroundColor: UIColor?
         
-        /// Visual effect to be applied to the button's background.
-        public let backgroundEffect: UIVisualEffect?
+//        /// Visual effect to be applied to the button's background.
+//        public let backgroundEffect: UIVisualEffect?
         
         /// Invoked when selecting the action.
         public let selection: EditActionSelection?
         
         #if !os(tvOS)
-        public init(title: String, style: UITableViewRowAction.Style = .default, backgroundColor: UIColor? = nil, backgroundEffect: UIVisualEffect? = nil, selection: EditActionSelection? = nil) {
+        public init(title: String, style: UIContextualAction.Style = .normal, backgroundColor: UIColor? = nil, /*backgroundEffect: UIVisualEffect? = nil,*/ selection: EditActionSelection? = nil) {
             self.title = title
             self.style = style
             self.backgroundColor = backgroundColor
-            self.backgroundEffect = backgroundEffect
+//            self.backgroundEffect = backgroundEffect
             self.selection = selection
         }
         #else
-        public init(title: String, backgroundColor: UIColor? = nil, backgroundEffect: UIVisualEffect? = nil, selection: EditActionSelection? = nil) {
+        public init(title: String, backgroundColor: UIColor? = nil, /*backgroundEffect: UIVisualEffect? = nil,*/ selection: EditActionSelection? = nil) {
             self.title = title
             self.backgroundColor = backgroundColor
-            self.backgroundEffect = backgroundEffect
+//            self.backgroundEffect = backgroundEffect
             self.selection = selection
         }
         #endif

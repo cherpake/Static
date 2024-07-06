@@ -243,28 +243,45 @@ extension DataSource: UITableViewDataSource {
     }
 
     #if !os(tvOS)
-    @objc(tableView:editActionsForRowAtIndexPath:)
-    public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        return row(at: indexPath)?.editActions.map {
-            action in
-            let rowAction = UITableViewRowAction(style: action.style, title: action.title) { (_, _) in
-                action.selection?(indexPath)
+    public func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if let actions: [UIContextualAction] = row(at: indexPath)?.editActions.map({ rowAction in
+            let action = UIContextualAction(style: rowAction.style, title: rowAction.title) { action, view, callback in
+                rowAction.selection?(indexPath)
             }
-
-            // These calls have side effects when setting to nil
-            // Setting a background color to nil will wipe out any predefined style
-            // Wrapping these in if-lets prevents nil-setting side effects
-            if let backgroundColor = action.backgroundColor {
-                rowAction.backgroundColor = backgroundColor
+            if let backgroundColor = rowAction.backgroundColor {
+                action.backgroundColor = backgroundColor
             }
-
-            if let backgroundEffect = action.backgroundEffect {
-                rowAction.backgroundEffect = backgroundEffect
-            }
-
-            return rowAction
+            return action
+        }) {
+            return UISwipeActionsConfiguration(actions: actions)
+        } else {
+            return nil
         }
+        
     }
+    
+//    @objc(tableView:editActionsForRowAtIndexPath:)
+//    public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+//        return row(at: indexPath)?.editActions.map {
+//            action in
+//            let rowAction = UITableViewRowAction(style: action.style, title: action.title) { (_, _) in
+//                action.selection?(indexPath)
+//            }
+//
+//            // These calls have side effects when setting to nil
+//            // Setting a background color to nil will wipe out any predefined style
+//            // Wrapping these in if-lets prevents nil-setting side effects
+//            if let backgroundColor = action.backgroundColor {
+//                rowAction.backgroundColor = backgroundColor
+//            }
+//
+//            if let backgroundEffect = action.backgroundEffect {
+//                rowAction.backgroundEffect = backgroundEffect
+//            }
+//
+//            return rowAction
+//        }
+//    }
     #endif
 
     public func sectionIndexTitles(for tableView: UITableView) -> [String]? {
